@@ -1,0 +1,11 @@
+{
+  "name": "lifecycle",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "lifecycle.ets",
+  "author": "",
+  "license": "Apache-2.0",
+  "packageType": "InterfaceHar",
+  "dependencies": {
+  }
+}
