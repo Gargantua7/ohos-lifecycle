@@ -59,9 +59,31 @@ struct Index {
                         url: "pages/Second"
                     })
                 })
+
+            Component()
         }
         .height('100%')
         .width('100%')
+    }
+}
+
+@ComponentV2
+struct Component {
+
+    private lifecycle!: Lifecycle
+
+    aboutToAppear(): void {
+        this.lifecycle = Lifecycle.getOrCreate(this)
+        this.lifecycle.addObserver({
+            onStateChanged: (state) => {
+                promptAction.showToast({
+                    message: "onStateChanged " + state
+                })
+            }
+        } as LifecycleEventObserver)
+    }
+
+    build() {
     }
 }
 
