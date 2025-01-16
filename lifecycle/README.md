@@ -3,6 +3,12 @@
 
 ***
 
+## 如何安装
+
+```
+ohpm install @gargantua7/lifecycle
+```
+
 ## Startup
 
 ### 注册 Ability

@@ -1,7 +1,7 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import { LifecycleAbility } from 'lifecycle';
+import { LifecycleAbility } from '@gargantua7/lifecycle';
 
 export default class EntryAbility extends LifecycleAbility {
     onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {

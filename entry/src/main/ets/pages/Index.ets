@@ -1,4 +1,4 @@
-import { Lifecycle, LifecycleEventObserver, ViewModel, ViewModelProvider } from 'lifecycle';
+import { Lifecycle, LifecycleEventObserver, ViewModel, ViewModelProvider } from '@gargantua7/lifecycle';
 import { promptAction, router } from '@kit.ArkUI';
 import { NotifyCenter } from './NotifyCenter';
 

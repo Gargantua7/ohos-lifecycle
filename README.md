@@ -3,6 +3,12 @@
 
 ***
 
+## 如何安装
+
+```
+ohpm install @gargantua7/lifecycle
+```
+
 ## Startup
 
 ### 注册 Ability
@@ -48,11 +54,11 @@ export default class EntryAbility extends UIAbilitiy {
 ```ts
 @ComponentV2
 struct Component {
-	private lifecycle!: Lifecycle
-	
+  private lifecycle!: Lifecycle
+
   aboutToAppear(): void {
-        this.lifecycle = Lifecycle.getOrCreate(this)
-    }
+    this.lifecycle = Lifecycle.getOrCreate(this)
+  }
 }
 ```
 
@@ -60,11 +66,11 @@ struct Component {
 
 ```ts
 this.lifecycle.addObserver({
-    onStateChanged: (state) => {
-        promptAction.showToast({
-            message: "onStateChanged " + state
-        })
-    }
+  onStateChanged: (state) => {
+    promptAction.showToast({
+      message: "onStateChanged " + state
+    })
+  }
 } as LifecycleEventObserver)
 ```
 
@@ -104,11 +110,11 @@ class MyViewModel extends ViewModel {
 ```ts
 class MyViewModel extends ViewModel {
   init() {
-  	this.addCloseable({
-  		close() {
-  			// ...
-  		}
-  	})
+    this.addCloseable({
+      close() {
+        // ...
+      }
+    })
   }
 }
 ```
@@ -122,21 +128,20 @@ class MyViewModel extends ViewModel {
 ```ts
 @ComponentV2
 struct Component {
-	
   aboutToAppear(): void {
-        Lifecycle.getOrCreate(this).lifecycleScope.launch(() => {
-        	//...
-        })
-    }
+    Lifecycle.getOrCreate(this).lifecycleScope.launch(() => {
+      //...
+    })
+  }
 }
 ```
 
 ```ts
 class MyViewModel extends ViewModel {
   init() {
-  	this.viewModelScope.launch(() => {
-  		//...
-  	})
+    this.viewModelScope.launch(() => {
+      //...
+    })
   }
 }
 ```

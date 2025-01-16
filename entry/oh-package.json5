@@ -6,7 +6,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "lifecycle": "file:../lifecycle",
+    "@gargantua7/lifecycle": "file:../lifecycle",
   }
 }
 
