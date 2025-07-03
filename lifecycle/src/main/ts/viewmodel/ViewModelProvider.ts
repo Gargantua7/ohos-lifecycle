@@ -18,21 +18,20 @@ export class ViewModelProvider {
         this.factory = factory
     }
 
-    get<VM extends ViewModel>(modelClass: new (extras?: object) => VM, name: string = "default", extras: object = {}): VM {
-        const saveName = modelClass.name + "/" + name
+    get<VM extends ViewModel>(modelClass: new (extras?: object) => VM, extras: object = {}): VM {
         const lifecycle = Lifecycle.getOrCreate(this.page)
         const owner = GlobalViewModelOwnerStore.getOrCreate(lifecycle)
         const store = owner.viewModelStore
 
-        let viewModel = store.get(saveName)
+        let viewModel = store.get(modelClass.name)
         if (!viewModel || viewModel.isClear) {
             viewModel = this.factory.create(modelClass, extras)
             viewModel.injectLifecycle(lifecycle)
-            store.put(saveName, viewModel)
+            store.put(modelClass.name, viewModel)
         }
 
         if (viewModel.constructor !== modelClass) {
-            throw new Error("ViewModelProvider: ViewModelFactory returned a different ViewModel class, name: " + saveName)
+            throw new Error("ViewModelProvider: ViewModelFactory returned a different ViewModel class, name: " + modelClass.name)
         }
 
         return viewModel as VM

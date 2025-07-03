@@ -1,6 +1,20 @@
 {
   "app": {
-    "signingConfigs": [],
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.cer",
+          "storePassword": "0000001A8E90CB753D34A99380B739F52F3545C1CCE27C49A738C31403F3B445B38AFA4D4705037BF5E5",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001A2F7B805E1C91DA85F5ACB442610787C98EC9549FB71954C79CC0F8670AF0EBA6C294B98494E8",
+          "profile": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
