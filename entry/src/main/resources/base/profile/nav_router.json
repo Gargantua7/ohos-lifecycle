@@ -1,0 +1,9 @@
+{
+  "routerMap": [
+    {
+      "name": "NavSecond",
+      "pageSourceFile": "src/main/ets/pages/NavSecond.ets",
+      "buildFunction": "NavSecondBuilder"
+    }
+  ]
+}

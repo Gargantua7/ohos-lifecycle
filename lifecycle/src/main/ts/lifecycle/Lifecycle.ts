@@ -4,46 +4,51 @@ import { HashSet } from "@kit.ArkTS";
 import { common } from '@kit.AbilityKit';
 import { AbilityStore, LifecycleEventDistributor } from "./AbilityStore";
 import { LifecycleScope } from "./LifecycleScope";
-import { Page } from "../ref/Page";
+import { Component } from "../ref/Component";
+import { mapNavDestinationStateToRouterPageState } from "../utils/StateMapper";
 
 export class Lifecycle {
 
-    static getOrCreate(page: Page) {
+    static getOrCreate(component: Component) {
         let abilityContext: common.UIAbilityContext
-        let pageInfo: uiObserver.RouterPageInfo
+        let info: uiObserver.RouterPageInfo | uiObserver.NavDestinationInfo
 
         try {
-            abilityContext = page.getUIContext().getHostContext()! as common.UIAbilityContext
-            pageInfo = page.queryRouterPageInfo()!
+            abilityContext = component.getUIContext().getHostContext()! as common.UIAbilityContext
+            info = component.queryNavDestinationInfo() ?? component.queryRouterPageInfo()!
         } catch (e) {
-            throw new Error(`${page} is not a page or component`)
+            throw new Error(`${component} is not a page or component`)
         }
 
         const abilityLifecycle = AbilityStore.get(abilityContext)
         if (!abilityLifecycle) {
-            throw new Error(`The ability what ${pageInfo.path} be hosted is not registered`)
+            throw new Error(`The ability what ${info.name} be hosted is not registered`)
         }
 
-        return abilityLifecycle.getOrCreateLifecycle(pageInfo)
+        return abilityLifecycle.getOrCreateLifecycle(info)
     }
 
-    static pageIdOf(pageInfo: uiObserver.RouterPageInfo) {
-        return `${pageInfo.path}[${pageInfo.pageId}]`
+    static fromRouter(info: uiObserver.RouterPageInfo): Lifecycle {
+        return new Lifecycle(info.state)
     }
 
-    private readonly pageId: string
+    static fromNavigation(info: uiObserver.NavDestinationInfo): Lifecycle {
+        return new Lifecycle(mapNavDestinationStateToRouterPageState(info.state))
+    }
+
     private _currState: uiObserver.RouterPageState
     private _observers = new HashSet<LifecycleObserver>()
     private _lifecycleScope?: LifecycleScope
 
-    constructor(pageInfo: uiObserver.RouterPageInfo) {
+    private constructor(initState: uiObserver.RouterPageState) {
 
-        this.pageId = Lifecycle.pageIdOf(pageInfo)
-        this._currState = pageInfo.state
+        this._currState = initState
 
         this._observers.add({
             onStateChanged: (state) => {
-                this._currState = state
+                if (state !== uiObserver.RouterPageState.ON_BACK_PRESS) {
+                    this._currState = state
+                }
             }
         })
     }

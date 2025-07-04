@@ -1,5 +1,6 @@
 import { Lifecycle, LifecycleEventObserver, ViewModel, ViewModelProvider } from '@gargantua7/lifecycle';
 import { promptAction, router } from '@kit.ArkUI';
+import { navController } from '../entryability/EntryAbility';
 import { NotifyCenter } from './NotifyCenter';
 
 @Entry
@@ -31,7 +32,7 @@ struct Index {
     }
 
     build() {
-        Column() {
+        Navigation(navController) {
             Button("Launch a coroutine at lifecycleScope")
                 .fontSize(12)
                 .fontWeight(FontWeight.Bold)
@@ -47,7 +48,6 @@ struct Index {
                 .fontSize(12)
                 .fontWeight(FontWeight.Bold)
                 .onClick(() => {
-
                     new ViewModelProvider(this).get(IndexViewModel).hello()
                 })
 
@@ -60,10 +60,20 @@ struct Index {
                     })
                 })
 
+            Button("Launch nav second page")
+                .fontSize(12)
+                .fontWeight(FontWeight.Bold)
+                .onClick(() => {
+                    navController.pushPath({ name: "NavSecond" })
+                })
+
             Component()
         }
         .height('100%')
         .width('100%')
+        .hideTitleBar(true)
+        .hideBackButton(true)
+        .hideToolBar(true)
     }
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@gargantua7/lifecycle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "类 Lifecycle 接口的生命周期监听和注册以及 ViewModel 管理",
   "main": "lifecycle.ets",
   "author": "Gargantua7<gargantua7@qq.com>",

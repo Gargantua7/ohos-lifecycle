@@ -3,6 +3,8 @@ import { HashMap } from "@kit.ArkTS"
 import { uiObserver } from "@kit.ArkUI"
 import { LifecycleObserver, DefaultLifecycleObserver, LifecycleEventObserver } from "./LifecycleObserver"
 import { common } from '@kit.AbilityKit';
+import { mapNavDestinationStateToRouterPageState } from "../utils/StateMapper";
+import { select } from "../utils/InfoSelector";
 
 export class AbilityStore {
 
@@ -34,28 +36,51 @@ export class AbilityStore {
         uiObserver.on("routerPageUpdate", context, (it) => {
             this.distribution(it)
         })
+
+
+        uiObserver.on("navDestinationUpdate", (it) => {
+            this.distribution(it)
+        })
     }
 
-    getOrCreateLifecycle(info: uiObserver.RouterPageInfo) {
+    getOrCreateLifecycle(info: uiObserver.RouterPageInfo | uiObserver.NavDestinationInfo) {
 
-        const id = Lifecycle.pageIdOf(info)
+        const id = this.idOf(info)
 
         if (!this.lifecycles.hasKey(id)) {
-            this.lifecycles.set(id, new Lifecycle(info))
+            const lifecycle = select(
+                info,
+                info => Lifecycle.fromRouter(info),
+                info => Lifecycle.fromNavigation(info)
+            )
+            this.lifecycles.set(id, lifecycle)
         }
 
         return this.lifecycles.get(id)
     }
 
-    distribution(info: uiObserver.RouterPageInfo) {
-        const id = Lifecycle.pageIdOf(info)
+    distribution(info: uiObserver.RouterPageInfo | uiObserver.NavDestinationInfo) {
+        const id = this.idOf(info)
         if (this.lifecycles.hasKey(id)) {
             const lifecycle = this.lifecycles.get(id)!
-            if (info.state === lifecycle.currState) return
+            const state = select(
+                info,
+                info => info.state,
+                info => mapNavDestinationStateToRouterPageState(info.state)
+            )
+            if (state === lifecycle.currState) return
             lifecycle.observers.forEach((observer) => {
-                LifecycleEventDistributor.distribution(observer, info.state)
+                LifecycleEventDistributor.distribution(observer, state)
             })
         }
+    }
+
+    private idOf(info: uiObserver.RouterPageInfo | uiObserver.NavDestinationInfo) {
+        return select(
+            info,
+            info => `${info.path}[${info.pageId}]`,
+            info => `${info.name}[${info.navDestinationId}]`
+        )
     }
 }
 

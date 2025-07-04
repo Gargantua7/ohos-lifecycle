@@ -1,6 +1,8 @@
 # ohos-lifecycle
 类 Lifecycle 接口的生命周期监听和注册以及 ViewModel 管理
 
+已支持 Navigation
+
 ***
 
 ## 如何安装
@@ -54,11 +56,11 @@ export default class EntryAbility extends UIAbilitiy {
 ```ts
 @ComponentV2
 struct Component {
-  private lifecycle!: Lifecycle
-
-  aboutToAppear(): void {
-    this.lifecycle = Lifecycle.getOrCreate(this)
-  }
+	private lifecycle!: Lifecycle
+	
+    aboutToAppear(): void {
+        this.lifecycle = Lifecycle.getOrCreate(this)
+    }
 }
 ```
 
@@ -66,11 +68,11 @@ struct Component {
 
 ```ts
 this.lifecycle.addObserver({
-  onStateChanged: (state) => {
-    promptAction.showToast({
-      message: "onStateChanged " + state
-    })
-  }
+    onStateChanged: (state) => {
+        promptAction.showToast({
+            message: "onStateChanged " + state
+        })
+    }
 } as LifecycleEventObserver)
 ```
 
@@ -94,8 +96,8 @@ this.lifecycle.addObserver({
 @ComponentV2
 struct Component {
 	get viewModel() {
-    ViewModelProvider.of(this).get(MyViewModel [, "viewModelName"])
-  }
+        ViewModelProvider.of(this).get(MyViewModel [, "viewModelName"])
+    }
 }
 
 class MyViewModel extends ViewModel {
@@ -109,13 +111,13 @@ class MyViewModel extends ViewModel {
 
 ```ts
 class MyViewModel extends ViewModel {
-  init() {
-    this.addCloseable({
-      close() {
-        // ...
-      }
-    })
-  }
+    init() {
+  	    this.addCloseable({
+  	    	close() {
+  	    		// ...
+  	    	}
+  	    })
+    }
 }
 ```
 
@@ -128,21 +130,41 @@ class MyViewModel extends ViewModel {
 ```ts
 @ComponentV2
 struct Component {
-  aboutToAppear(): void {
-    Lifecycle.getOrCreate(this).lifecycleScope.launch(() => {
-      //...
-    })
-  }
+	
+    aboutToAppear(): void {
+        Lifecycle.getOrCreate(this).lifecycleScope.launch(() => {
+        	//...
+        })
+    }
 }
 ```
 
 ```ts
 class MyViewModel extends ViewModel {
-  init() {
-    this.viewModelScope.launch(() => {
-      //...
-    })
-  }
+    init() {
+    	this.viewModelScope.launch(() => {
+    		//...
+    	})
+    }
 }
 ```
 
+### Router 向 Navigation 迁移
+
+`Lifecycle.getOrCreate` 会自动识别是否在 NavDestination 中，其余 API 保持不变
+
+提供 `registerComponentIntoLifecycle` 方法用于回调原 router 方式中存在但 Navigation 方式不存在的 `onPageShow` 以及 `onPageHide` 等方法
+```ts
+@ComponentV2
+struct Component {
+	
+    aboutToAppear(): void {
+        registerComponentIntoLifecycle(this)
+    }
+    
+    onPageShow(): void {}
+    onPageHide(): void {}
+    
+    
+}
+```

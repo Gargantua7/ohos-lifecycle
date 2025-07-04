@@ -6,12 +6,12 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.cer",
-          "storePassword": "0000001A8E90CB753D34A99380B739F52F3545C1CCE27C49A738C31403F3B445B38AFA4D4705037BF5E5",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001A2F7B805E1C91DA85F5ACB442610787C98EC9549FB71954C79CC0F8670AF0EBA6C294B98494E8",
+          "keyPassword": "0000001B4D446D706AACE11D0B74064B248788164E82F7CDBA6734CEC5C7D9FEEC429EC7C4B39656DA1B9B",
           "profile": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.p12"
+          "storeFile": "/Users/Gargantua/.ohos/config/default_ohos-lifecycle_nQMnNA0gNzSklM8yCfXnhzxaVM0sOJvwnSZMmRKSQy8=.p12",
+          "storePassword": "0000001BE8712B394BB1E8B3AFA7469B5FEA30E2E2C781E4BEE7B50F383A798404CB7FB1515F98137B495E"
         }
       }
     ],
@@ -19,7 +19,7 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.1(13)",
+        "compatibleSdkVersion": "5.0.3(15)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {

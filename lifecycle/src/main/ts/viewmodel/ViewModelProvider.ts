@@ -1,19 +1,19 @@
 import { Lifecycle } from "../lifecycle/Lifecycle";
-import { Page } from "../ref/Page";
+import { Component } from "../ref/Component";
 import { ViewModel } from "./ViewModel";
 import { DefaultViewModelFactory, ViewModelFactory } from "./ViewModelFactory";
 import { GlobalViewModelOwnerStore } from "./ViewModelStoreOwner";
 
 export class ViewModelProvider {
 
-    private page: Page
+    private page: Component
     private factory: ViewModelFactory
 
-    static of(page: Page, factory: ViewModelFactory = DefaultViewModelFactory) {
+    static of(page: Component, factory: ViewModelFactory = DefaultViewModelFactory) {
         return new ViewModelProvider(page, factory)
     }
 
-    constructor(page: Page, factory: ViewModelFactory = DefaultViewModelFactory) {
+    constructor(page: Component, factory: ViewModelFactory = DefaultViewModelFactory) {
         this.page = page
         this.factory = factory
     }

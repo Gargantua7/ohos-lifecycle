@@ -3,6 +3,8 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { LifecycleAbility } from '@gargantua7/lifecycle';
 
+export const navController = new NavPathStack();
+
 export default class EntryAbility extends LifecycleAbility {
     onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
         super.onCreate(want, launchParam);

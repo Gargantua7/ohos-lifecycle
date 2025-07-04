@@ -10,9 +10,11 @@ export class LifecycleScope extends AbstractLifecycleScope {
         lifecycle.addObserver({
             onStateChanged: (state: uiObserver.RouterPageState) => {
 
-                this.canExecute = state === uiObserver.RouterPageState.ON_PAGE_SHOW || state === uiObserver.RouterPageState.ON_BACK_PRESS
+                if (state === uiObserver.RouterPageState.ON_BACK_PRESS) return
 
-                if (state === uiObserver.RouterPageState.ON_PAGE_SHOW || state === uiObserver.RouterPageState.ON_BACK_PRESS) {
+                this.canExecute = state === uiObserver.RouterPageState.ON_PAGE_SHOW
+
+                if (state === uiObserver.RouterPageState.ON_PAGE_SHOW) {
                     this.execute()
                 } else if (state === uiObserver.RouterPageState.ABOUT_TO_DISAPPEAR) {
                     this.clear()
